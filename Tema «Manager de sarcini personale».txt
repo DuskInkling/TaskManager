@@ -1,0 +1,29 @@
+Tema: «Manager de sarcini personale» (Task Manager)
+
+  Scopul lucrării: dezvoltarea unei aplicații desktop pe C# pentru gestionarea unei liste de sarcini personale, cu păstrarea datelor între sesiunile de
+  lucru.
+
+  Cerințe funcționale:
+
+  Aplicația trebuie să permită crearea, modificarea și ștergerea sarcinilor. Fiecare sarcină are:
+  - denumire (titlu);
+  - descriere;
+  - data creării;
+  - termen-limită (deadline);
+  - prioritate (scăzută / medie / înaltă);
+  - categorie (de exemplu: serviciu, studii, casă);
+  - stare (nouă, în lucru, finalizată).
+
+  Utilizatorul trebuie să vadă lista tuturor sarcinilor cu posibilitatea de filtrare după stare, categorie și prioritate, precum și sortare după dată sau
+   prioritate. Trebuie prevăzută căutare după denumire și descriere. Toate datele trebuie salvate într-un fișier (JSON sau XML) și încărcate automat la
+  pornirea aplicației.
+
+  Cerințe tehnice:
+
+  Platforma — .NET 6/8, interfață pe WinForms sau WPF (la alegerea studentului). Arhitectura trebuie să fie împărțită în minimum 3 proiecte/straturi:
+  modele (clase de date), logică de business (gestionarea sarcinilor, filtrare), UI. Obligatoriu folosirea colecțiilor (List<T>), LINQ pentru filtrare și
+   sortare, serializare (System.Text.Json), tratarea excepțiilor la lucrul cu fișierele. Codul trebuie să conțină comentarii XML pentru metodele publice.
+
+  Suplimentar (pentru notă majorată):
+
+  Notificări despre sarcinile cu termen ce expiră, exportul listei de sarcini în CSV, suport pentru teme de aspect (deschisă / întunecată).

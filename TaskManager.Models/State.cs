@@ -8,5 +8,8 @@ namespace TaskManager.Models
 {
     public enum State
     {
+        New,
+        InProgress,
+        Completed
     }
 }

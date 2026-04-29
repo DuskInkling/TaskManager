@@ -9,6 +9,11 @@ namespace TaskManager.Models
 {
     public enum Category
     {
-
+        Work,
+        Study,
+        Home,
+        Personal,
+        Hobby,
+        Other
     }
 }

@@ -1,4 +1,9 @@
-obj/
 bin/
+obj/
 .vs/
 *.user
+*.suo
+*.zip
+*.rar
+TaskManager-main/
+Solution1/

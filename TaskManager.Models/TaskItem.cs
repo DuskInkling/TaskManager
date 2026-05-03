@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TaskManager.Models;
 
 namespace TaskManager.Models
 {
     public class TaskItem
     {
-        private int id { get; set; }
-        private string title { get; set; }
-        private string description { get; set; }
-        private DateTime creationDate { get; set; }
-        private DateTime deadline { get; set; }
-        public Priority priority { get; set; }
-        public Category category { get; set; }
-        public State state { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public DateTime CreationDate { get; set; } = DateTime.Now;
+        public DateTime Deadline { get; set; }
+        public Priority Priority { get; set; }
+        public Category Category { get; set; }
+        public State State { get; set; } = State.New;
     }
 }

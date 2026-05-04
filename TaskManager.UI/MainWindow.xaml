@@ -5,8 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskManager.UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Width="1280" Height="720"
+        WindowStartupLocation="CenterScreen">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top"
+              Background="#441375"
+              Foreground="#FFFFFF"
+              Height="22"
+              FontSize="12pt">
+            <MenuItem Header="File">
+                <MenuItem Header="New Task">
+                </MenuItem>
+                <MenuItem Header="Open/Import"></MenuItem>
+                <MenuItem Header="Export"></MenuItem>
+                <MenuItem Header="Settings"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Undo"></MenuItem>
+                <MenuItem Header="Redo"></MenuItem>
+                <MenuItem Header="Copy"></MenuItem>
+                <MenuItem Header="Paste"></MenuItem>
+                <MenuItem Header="Edit Task"></MenuItem>
+                <MenuItem Header="Delete Task"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="View">
+                <MenuItem Header="Dark/Light Mode"></MenuItem>
+                <MenuItem Header="Refresh"></MenuItem>
+                <MenuItem Header="Show/Hide Completed Task"></MenuItem>
+                <MenuItem Header="Sort By">
+                    <MenuItem Header="Date"></MenuItem>
+                    <MenuItem Header="Priority"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Filter"></MenuItem>              
+            </MenuItem>
+        </Menu>
+        <Grid>
 
-    </Grid>
+        </Grid>
+    </DockPanel>
+
 </Window>

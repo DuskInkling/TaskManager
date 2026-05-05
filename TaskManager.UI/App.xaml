@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:TaskManager.UI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        
+        <!--Menu Bar Styler-->
         <Style TargetType="MenuItem">
             <Setter Property="Background" Value="#441375"/>
             <Setter Property="Foreground" Value="White"/>
@@ -26,5 +28,68 @@
                 </MultiTrigger>
             </Style.Triggers>
         </Style>
+
+        <!--Filter Panel styler-->
+        <Style x:Key="FilterControl" TargetType="Border">
+            <Setter Property="Background" Value="#570a5e"/>
+            <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="ClipToBounds" Value="True"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+        <!--Combo Box Styler-->
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="#570a5e" />
+            <Setter Property="Foreground" Value="#FFFFFF" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton Background="{TemplateBinding Background}"
+                                  Foreground="{TemplateBinding Foreground}"
+                                  BorderThickness="0"
+                                  IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                  Focusable="False">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="border"
+                                                Background="{Binding Background, RelativeSource={RelativeSource AncestorType=ComboBox}}"
+                                                CornerRadius="20"
+                                                Padding="6">
+                                            <ContentPresenter/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="border" Property="Background" Value="#7a1a8a"/>
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter TargetName="border" Property="Background" Value="#46124f"/>
+                                            </Trigger>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="border" Property="Background" Value="#46124f"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                                <DockPanel>
+                                    <TextBlock Text="▼" DockPanel.Dock="Right" Margin="40,0,0,0" VerticalAlignment="Center"/>
+                                    <ContentPresenter Content="{Binding SelectionBoxItem, RelativeSource={RelativeSource AncestorType=ComboBox}}"
+                                              Margin="6,0" VerticalAlignment="Center"/>
+                                </DockPanel>
+                            </ToggleButton>
+                            <Popup IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   Placement="Bottom"
+                                   AllowsTransparency="True">
+                                <Border Background="#570a5e" BorderThickness="0">
+                                    <ItemsPresenter/>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        
     </Application.Resources>
 </Application>

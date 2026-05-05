@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Width="1280" Height="720"
         WindowStartupLocation="CenterScreen">
+ 
+    
     <DockPanel>
         <Menu DockPanel.Dock="Top"
               Background="#441375"
@@ -41,17 +43,19 @@
         </Menu>
         <Border DockPanel.Dock="Top" Background="#2d0a5e" Padding="10,6">
             <WrapPanel>
-                <TextBox x:Name="Search" 
-                         Width="200" 
-                         Margin="10" 
-                         Background="#570a5e"
-                         Foreground="#FFFFFF"
-                         BorderBrush="#5e0a3b"
-                         VerticalAlignment="Center"/>
-                <ComboBox x:Name="cmbState" Width="120" Margin="10"/>
-                <ComboBox x:Name="cmbCategory" Width="120" Margin="10"/>
-                <ComboBox x:Name="cmbPriority" Width="120" Margin="10"/>
-                <ComboBox x:Name="cmbSort" Width="120" Margin="10"/>
+                <Border Style="{StaticResource FilterControl}">
+                    <TextBox x:Name="Search" 
+                             Width="200" 
+                             Margin="10" 
+                             Background="Transparent"
+                             Foreground="#FFFFFF"
+                             BorderThickness="0"
+                             Padding="4"/>
+                </Border>
+                <ComboBox x:Name="cmbState" Width="120" Foreground="#FFFFFF" BorderThickness="0" Margin="10"/>
+                <ComboBox x:Name="cmbCategory" Width="120" Foreground="#FFFFFF" BorderThickness="0" Margin="10"/>
+                <ComboBox x:Name="cmbPriority" Width="120" Foreground="#FFFFFF" BorderThickness="0" Margin="10"/>
+                <ComboBox x:Name="cmbSort" Width="120" Foreground="#FFFFFF" BorderThickness="0" Margin="10"/>
             </WrapPanel>
         </Border>
     </DockPanel>

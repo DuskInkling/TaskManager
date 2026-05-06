@@ -41,7 +41,7 @@
                 <MenuItem Header="Filter"></MenuItem>              
             </MenuItem>
         </Menu>
-        <Border DockPanel.Dock="Top" Background="#2d0a5e" Padding="10,6">
+        <Border DockPanel.Dock="Top" Background="#2d0a5e" Padding="10,6" BorderThickness="0">
             <WrapPanel>
                 <Border Style="{StaticResource FilterControl}">
                     <TextBox x:Name="Search" 
@@ -58,6 +58,27 @@
                 <ComboBox x:Name="cmbSort" Width="120" Foreground="#FFFFFF" BorderThickness="0" Margin="10"/>
             </WrapPanel>
         </Border>
+        <ScrollViewer Background="#1a0038">
+            <ItemsControl x:Name="taskList">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Width="280" Height="260" Margin="10" Background="#570a5e" CornerRadius="12">
+                            <StackPanel Margin="12">
+                                <TextBlock Text="{Binding Title}" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Description}" Foreground="#cccccc" FontSize="11"/>
+                                <TextBlock Text="{Binding Deadline}" Foreground="#aaaaaa" FontSize="10"/>
+                                <TextBlock Text="{Binding Priority}" Foreground="#aaaaaa" FontSize="10"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </DockPanel>
-
+    
 </Window>

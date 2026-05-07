@@ -5,8 +5,75 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskManager.UI"
         mc:Ignorable="d"
-        Title="TaskWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="New Task" Height="500" Width="500"
+        WindowStartupLocation="CenterScreen"
+        Background="#1a0038"
+        FontSize="16">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <Label Content="Title" Foreground="White" Grid.Row="0" Grid.Column="0" Margin="0,10"/>
+        <TextBox x:Name="txtTitle" Grid.Row="0" Grid.Column="1" Margin="0,10"
+                 Background="#570a5e" Foreground="White" BorderThickness="0" Padding="6"/>
+
+        <!-- Description -->
+        <Label Content="Description" Foreground="White" Grid.Row="1" Grid.Column="0" Margin="0,10"/>
+        <TextBox x:Name="txtDescription" Grid.Row="1" Grid.Column="1" Margin="0,10"
+                 Background="#570a5e" Foreground="White" BorderThickness="0" Padding="6"
+                 Height="65" TextWrapping="Wrap" AcceptsReturn="True"/>
+
+        <!-- Deadline -->
+        <Label Content="Deadline" Foreground="White" Grid.Row="2" Grid.Column="0" Margin="0,10"/>
+        <DatePicker x:Name="dpDeadline" Grid.Row="2" Grid.Column="1" Margin="0,10"
+                    Background="#570a5e" Foreground="White"/>
+
+        <!-- Priority -->
+        <Label Content="Priority" Foreground="White" Grid.Row="3" Grid.Column="0" Margin="0,10"/>
+        <ComboBox x:Name="cmbPriority" Grid.Row="3" Grid.Column="1" Margin="0,10">
+            <ComboBoxItem Content="Low"/>
+            <ComboBoxItem Content="Medium"/>
+            <ComboBoxItem Content="High"/>
+        </ComboBox>
+
+        <!-- Category -->
+        <Label Content="Category" Foreground="White" Grid.Row="4" Grid.Column="0" Margin="0,10"/>
+        <ComboBox x:Name="cmbCategory" Grid.Row="4" Grid.Column="1" Margin="0,10">
+            <ComboBoxItem Content="Work"/>
+            <ComboBoxItem Content="Study"/>
+            <ComboBoxItem Content="Home"/>
+            <ComboBoxItem Content="Personal"/>
+            <ComboBoxItem Content="Hobby"/>
+            <ComboBoxItem Content="Other"/>
+        </ComboBox>
+
+        <!-- State -->
+        <Label Content="State" Foreground="White" Grid.Row="5" Grid.Column="0" Margin="0,10"/>
+        <ComboBox x:Name="cmbState" Grid.Row="5" Grid.Column="1" Margin="0,10">
+            <ComboBoxItem Content="New" IsSelected="True"/>
+            <ComboBoxItem Content="InProgress"/>
+            <ComboBoxItem Content="Completed"/>
+        </ComboBox>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,20,0,0">
+            <Button x:Name="btnSave" Content="Save" Width="80" Margin="0,0,10,0"
+                    Background="#441375" Foreground="White" BorderThickness="0"/>
+            <Button x:Name="btnCancel" Content="Cancel" Width="80"
+                    Background="#2d0a5e" Foreground="White" BorderThickness="0"/>
+        </StackPanel>
     </Grid>
 </Window>

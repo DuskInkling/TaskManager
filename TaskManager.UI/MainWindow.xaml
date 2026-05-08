@@ -6,59 +6,59 @@
         xmlns:local="clr-namespace:TaskManager.UI"
         mc:Ignorable="d"
         Title="MainWindow" Width="1280" Height="720"
-        WindowStartupLocation="CenterScreen">
- 
-    
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BackgroundBrush}">
+
     <DockPanel>
         <Menu DockPanel.Dock="Top"
-              Background="#441375"
-              Foreground="#FFFFFF"
+              Background="{StaticResource PrimaryBrush}"
+              Foreground="{StaticResource ForegroundBrush}"
               Height="22"
               FontSize="12pt">
             <MenuItem Header="File">
-                <MenuItem Header="New Task">
-                </MenuItem>
-                <MenuItem Header="Open/Import"></MenuItem>
-                <MenuItem Header="Export"></MenuItem>
-                <MenuItem Header="Settings"></MenuItem>
+                <MenuItem Header="New Task"/>
+                <MenuItem Header="Open/Import"/>
+                <MenuItem Header="Export"/>
+                <MenuItem Header="Settings"/>
             </MenuItem>
             <MenuItem Header="Edit">
-                <MenuItem Header="Undo"></MenuItem>
-                <MenuItem Header="Redo"></MenuItem>
-                <MenuItem Header="Copy"></MenuItem>
-                <MenuItem Header="Paste"></MenuItem>
-                <MenuItem Header="Edit Task"></MenuItem>
-                <MenuItem Header="Delete Task"></MenuItem>
+                <MenuItem Header="Undo"/>
+                <MenuItem Header="Redo"/>
+                <MenuItem Header="Copy"/>
+                <MenuItem Header="Paste"/>
+                <MenuItem Header="Edit Task"/>
+                <MenuItem Header="Delete Task"/>
             </MenuItem>
             <MenuItem Header="View">
-                <MenuItem Header="Dark/Light Mode"></MenuItem>
-                <MenuItem Header="Refresh"></MenuItem>
-                <MenuItem Header="Show/Hide Completed Task"></MenuItem>
+                <MenuItem Header="Dark/Light Mode"/>
+                <MenuItem Header="Refresh"/>
+                <MenuItem Header="Show/Hide Completed Task"/>
                 <MenuItem Header="Sort By">
-                    <MenuItem Header="Date"></MenuItem>
-                    <MenuItem Header="Priority"></MenuItem>
+                    <MenuItem Header="Date"/>
+                    <MenuItem Header="Priority"/>
                 </MenuItem>
-                <MenuItem Header="Filter"></MenuItem>              
+                <MenuItem Header="Filter"/>
             </MenuItem>
         </Menu>
-        <Border DockPanel.Dock="Top" Background="#2d0a5e" Padding="10,6" BorderThickness="0">
+
+        <Border DockPanel.Dock="Top" Background="{StaticResource SecondaryBrush}" Padding="10,6" BorderThickness="0">
             <WrapPanel>
                 <Border Style="{StaticResource FilterControl}">
-                    <TextBox x:Name="Search" 
-                             Width="200" 
-                             Margin="10" 
+                    <TextBox x:Name="Search"
+                             Width="200"
+                             Margin="10"
                              Background="Transparent"
-                             Foreground="#FFFFFF"
                              BorderThickness="0"
                              Padding="4"/>
                 </Border>
-                <ComboBox x:Name="cmbState" Width="120" Foreground="#FFFFFF" BorderThickness="0" Margin="10"/>
-                <ComboBox x:Name="cmbCategory" Width="120" Foreground="#FFFFFF" BorderThickness="0" Margin="10"/>
-                <ComboBox x:Name="cmbPriority" Width="120" Foreground="#FFFFFF" BorderThickness="0" Margin="10"/>
-                <ComboBox x:Name="cmbSort" Width="120" Foreground="#FFFFFF" BorderThickness="0" Margin="10"/>
+                <ComboBox x:Name="cmbState" Width="120" Margin="10"/>
+                <ComboBox x:Name="cmbCategory" Width="120" Margin="10"/>
+                <ComboBox x:Name="cmbPriority" Width="120" Margin="10"/>
+                <ComboBox x:Name="cmbSort" Width="120" Margin="10"/>
             </WrapPanel>
         </Border>
-        <ScrollViewer Background="#1a0038">
+
+        <ScrollViewer Background="{StaticResource BackgroundBrush}">
             <ItemsControl x:Name="taskList">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -67,12 +67,14 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Width="280" Height="260" Margin="10" Background="#570a5e" CornerRadius="12">
+                        <Border Width="280" Height="260" Margin="10"
+                                Background="{StaticResource AccentBrush}"
+                                CornerRadius="12">
                             <StackPanel Margin="12">
-                                <TextBlock Text="{Binding Title}" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                                <TextBlock Text="{Binding Description}" Foreground="#cccccc" FontSize="11"/>
-                                <TextBlock Text="{Binding Deadline}" Foreground="#aaaaaa" FontSize="10"/>
-                                <TextBlock Text="{Binding Priority}" Foreground="#aaaaaa" FontSize="10"/>
+                                <TextBlock Text="{Binding Title}" Foreground="{StaticResource ForegroundBrush}" FontSize="14" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Description}" Foreground="{StaticResource SubtextBrush}" FontSize="11"/>
+                                <TextBlock Text="{Binding Deadline}" Foreground="{StaticResource SubtextBrush}" FontSize="10"/>
+                                <TextBlock Text="{Binding Priority}" Foreground="{StaticResource SubtextBrush}" FontSize="10"/>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
@@ -80,5 +82,5 @@
             </ItemsControl>
         </ScrollViewer>
     </DockPanel>
-    
+
 </Window>

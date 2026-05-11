@@ -16,7 +16,7 @@
               Height="22"
               FontSize="12pt">
             <MenuItem Header="File">
-                <MenuItem Header="New Task"/>
+                <MenuItem Header="New Task" Click="NewTask_Click"/>
                 <MenuItem Header="Open/Import"/>
                 <MenuItem Header="Export"/>
                 <MenuItem Header="Settings"/>
@@ -42,20 +42,30 @@
         </Menu>
 
         <Border DockPanel.Dock="Top" Background="{StaticResource SecondaryBrush}" Padding="10,6" BorderThickness="0">
-            <WrapPanel>
-                <Border Style="{StaticResource FilterControl}">
-                    <TextBox x:Name="Search"
-                             Width="200"
-                             Margin="10"
-                             Background="Transparent"
-                             BorderThickness="0"
-                             Padding="4"/>
-                </Border>
-                <ComboBox x:Name="cmbState" Width="120" Margin="10"/>
-                <ComboBox x:Name="cmbCategory" Width="120" Margin="10"/>
-                <ComboBox x:Name="cmbPriority" Width="120" Margin="10"/>
-                <ComboBox x:Name="cmbSort" Width="120" Margin="10"/>
-            </WrapPanel>
+            <DockPanel>
+                <Button DockPanel.Dock="Right"
+                        Content="+ New Task"
+                        Click="NewTask_Click"
+                        Margin="10"
+                        Padding="12,4"
+                        Background="{StaticResource PrimaryBrush}"
+                        Foreground="{StaticResource ForegroundBrush}"
+                        BorderThickness="0"/>
+                <WrapPanel>
+                    <Border Style="{StaticResource FilterControl}">
+                        <TextBox x:Name="Search" Text="Search"
+                                 Width="200"
+                                 Margin="10"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 Padding="4"/>
+                    </Border>
+                    <ComboBox x:Name="cmbState" Width="120" Margin="10"/>
+                    <ComboBox x:Name="cmbCategory" Width="120" Margin="10"/>
+                    <ComboBox x:Name="cmbPriority" Width="120" Margin="10"/>
+                    <ComboBox x:Name="cmbSort" Width="120" Margin="10"/>
+                </WrapPanel>
+            </DockPanel>
         </Border>
 
         <ScrollViewer Background="{StaticResource BackgroundBrush}">

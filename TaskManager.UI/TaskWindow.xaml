@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskManager.UI"
         mc:Ignorable="d"
-        Title="New Task" Height="500" Width="500"
+        Title="New Task" Height="520" Width="500"
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource BackgroundBrush}"
         FontSize="16">
-    <Grid Margin="20">
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
@@ -34,13 +34,32 @@
                  Height="65" TextWrapping="Wrap" AcceptsReturn="True" Padding="6"/>
 
         <!-- Deadline -->
+        <!-- Deadline -->
         <Label Content="Deadline" Foreground="{StaticResource ForegroundBrush}" Grid.Row="2" Grid.Column="0" Margin="0,10"/>
-        <DatePicker x:Name="dpDeadline" Grid.Row="2" Grid.Column="1" Margin="0,10"/>
+        <Grid Grid.Row="2" Grid.Column="1" Margin="0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ComboBox x:Name="cmbDays" Grid.Column="0" SelectionChanged="cmbDays_SelectionChanged">
+                <ComboBoxItem Content="Select Days" IsSelected="True" IsEnabled="False"/>
+                <ComboBoxItem Content="1 Day"/>
+                <ComboBoxItem Content="3 Days"/>
+                <ComboBoxItem Content="5 Days"/>
+                <ComboBoxItem Content="7 Days"/>
+                <ComboBoxItem Content="14 Days"/>
+                <ComboBoxItem Content="30 Days"/>
+            </ComboBox>
+            <DatePicker x:Name="dpDeadline" Grid.Column="2" SelectedDateChanged="dpDeadLine_SelectedDateChanged"/>
+        </Grid>
+
+
 
         <!-- Priority -->
         <Label Content="Priority" Foreground="{StaticResource ForegroundBrush}" Grid.Row="3" Grid.Column="0" Margin="0,10"/>
         <ComboBox x:Name="cmbPriority" Grid.Row="3" Grid.Column="1" Margin="0,10">
-            <ComboBoxItem Content="Low"/>
+            <ComboBoxItem Content="Low" IsSelected="True"/>
             <ComboBoxItem Content="Medium"/>
             <ComboBoxItem Content="High"/>
         </ComboBox>
@@ -48,7 +67,7 @@
         <!-- Category -->
         <Label Content="Category" Foreground="{StaticResource ForegroundBrush}" Grid.Row="4" Grid.Column="0" Margin="0,10"/>
         <ComboBox x:Name="cmbCategory" Grid.Row="4" Grid.Column="1" Margin="0,10">
-            <ComboBoxItem Content="Work"/>
+            <ComboBoxItem Content="Work" IsSelected="True"/>
             <ComboBoxItem Content="Study"/>
             <ComboBoxItem Content="Home"/>
             <ComboBoxItem Content="Personal"/>
@@ -65,12 +84,12 @@
         </ComboBox>
 
         <!-- Buttons -->
-        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,20,0,0">
-            <Button x:Name="btnSave" Content="Save" Width="80" Margin="0,0,10,0"
-                    Background="{StaticResource PrimaryBrush}" Foreground="{StaticResource ForegroundBrush}" BorderThickness="0"/>
-            <Button x:Name="btnCancel" Content="Cancel" Width="80"
-                    Background="{StaticResource SecondaryBrush}" Foreground="{StaticResource ForegroundBrush}" BorderThickness="0"/>
+        <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,20">
+            <Button x:Name="btnSave" Content="Save" Width="80" Height="40" Margin="0,0,10,0" Click="btnSaveClick"
+                    BorderThickness="0"/>
+            <Button x:Name="btnCancel" Content="Cancel" Width="80" Height="40" Click="btnCancelClick"
+                    BorderThickness="0"/>
         </StackPanel>
     </Grid>
 </Window>

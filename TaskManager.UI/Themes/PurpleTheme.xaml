@@ -5,7 +5,7 @@
     <Color x:Key="SecondaryColor">#2d0a5e</Color>
     <Color x:Key="AccentColor">#570a5e</Color>
     <Color x:Key="AccentHoverColor">#7a1a8a</Color>
-    <Color x:Key="AccentPressedColor">#46124f</Color>
+    <Color x:Key="AccentPressedColor">#2f0f4f</Color>
     <Color x:Key="BackgroundColor">#1a0038</Color>
     <Color x:Key="ForegroundColor">#FFFFFF</Color>
     <Color x:Key="SubtextColor">#cccccc</Color>

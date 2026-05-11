@@ -35,7 +35,7 @@
 
             <!--Filter Panel Styler-->
             <Style x:Key="FilterControl" TargetType="Border">
-                <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+                <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
                 <Setter Property="CornerRadius" Value="20"/>
                 <Setter Property="ClipToBounds" Value="True"/>
                 <Setter Property="Margin" Value="10"/>
@@ -43,7 +43,7 @@
 
             <!--ComboBox Styler-->
             <Style TargetType="ComboBox">
-                <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+                <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
                 <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
                 <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="Template">
@@ -85,7 +85,7 @@
                                 <Popup IsOpen="{TemplateBinding IsDropDownOpen}"
                                        Placement="Bottom"
                                        AllowsTransparency="True">
-                                    <Border Background="{StaticResource AccentBrush}" BorderThickness="0">
+                                    <Border Background="{StaticResource PrimaryBrush}" BorderThickness="0">
                                         <ItemsPresenter/>
                                     </Border>
                                 </Popup>
@@ -108,7 +108,7 @@
                                         <Thumb>
                                             <Thumb.Template>
                                                 <ControlTemplate TargetType="Thumb">
-                                                    <Border Background="{StaticResource AccentBrush}" CornerRadius="8"/>
+                                                    <Border Background="{StaticResource PrimaryBrush}" CornerRadius="8"/>
                                                 </ControlTemplate>
                                             </Thumb.Template>
                                         </Thumb>
@@ -122,7 +122,7 @@
 
             <!--TextBox Styler-->
             <Style TargetType="TextBox">
-                <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+                <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
                 <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
                 <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="Padding" Value="8,6"/>
@@ -140,7 +140,7 @@
 
             <!--DatePicker Styler-->
             <Style TargetType="DatePicker">
-                <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+                <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
                 <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
                 <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="Template">
@@ -156,7 +156,10 @@
                                                        Grid.Column="0"
                                                        Background="Transparent"
                                                        Foreground="{StaticResource ForegroundBrush}"
-                                                       BorderThickness="0"/>
+                                                       BorderThickness="0"
+                                                       IsReadOnly="True"
+                                                       VerticalContentAlignment="Center"
+                                                       Padding="4,0"/>
                                     <Button x:Name="PART_Button"
                                             Grid.Column="1"
                                             Background="Transparent"
@@ -170,7 +173,34 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-
+    <!--Button Styler-->
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Padding" Value="12,6"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="20"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="{StaticResource AccentHoverBrush}"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="{StaticResource AccentPressedBrush}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

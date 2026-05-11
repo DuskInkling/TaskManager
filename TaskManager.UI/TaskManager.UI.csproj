@@ -8,4 +8,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TaskManager.BusinessLogic\TaskManager.BusinessLogic.csproj" />
+    <ProjectReference Include="..\TaskManager.Models\TaskManager.Models.csproj" />
+  </ItemGroup>
+
 </Project>

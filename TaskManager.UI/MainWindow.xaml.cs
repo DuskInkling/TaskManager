@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Microsoft.Win32;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -10,6 +11,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TaskManager.BusinessLogic;
 using TaskManager.Models;
+using Microsoft.Win32;
 namespace TaskManager.UI
 {
     /// <summary>
@@ -39,6 +41,30 @@ namespace TaskManager.UI
         {
             taskList.ItemsSource = null;
             taskList.ItemsSource = _taskService.GetAllTasks();
+        }
+        private void OpenFile(object sender, RoutedEventArgs e) 
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "JSON Files (*json)|*.json";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string filepath = openFileDialog.FileName;
+                var tasks = _dataService.LoadFromJson(filepath);
+                _taskService.LoadTasks(tasks);
+                RefreshGrid();
+            }
+        }
+        private void Export(object sender, RoutedEventArgs e)
+        {
+
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "CSV files (*csv)|*.csv";
+            save.FileName = "tasks";
+            save.InitialDirectory = @"C:\";
+            if (save.ShowDialog() == true) {
+                var tasksToExport = _taskService.GetAllTasks();
+                _dataService.ExportToCsv(tasksToExport, save.FileName);
+            }
         }
     }
 }

@@ -17,8 +17,8 @@
               FontSize="12pt">
             <MenuItem Header="File">
                 <MenuItem Header="New Task" Click="NewTask_Click"/>
-                <MenuItem Header="Open/Import"/>
-                <MenuItem Header="Export"/>
+                <MenuItem Header="Open" Click="OpenFile"/>
+                <MenuItem Header="Export" Click="Export"/>
                 <MenuItem Header="Settings"/>
             </MenuItem>
             <MenuItem Header="Edit">

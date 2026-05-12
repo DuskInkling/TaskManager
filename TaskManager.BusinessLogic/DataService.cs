@@ -46,6 +46,27 @@ namespace TaskManager.BusinessLogic
                 return new List<TaskItem>();
             }   
         }
+        public List<TaskItem> LoadFromJson(string filePath)
+        {
+            try
+            {
+                if (!File.Exists(filePath))
+                    return new List<TaskItem>();
+
+                string json = File.ReadAllText(filePath);
+                return JsonSerializer.Deserialize<List<TaskItem>>(json) ?? new List<TaskItem>();
+            }
+            catch (JsonException ex)
+            {
+                Console.WriteLine($"Error reading tasks {ex.Message}");
+                return new List<TaskItem>();
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine($"Error accesing file{ex.Message}");
+                return new List<TaskItem>();
+            }
+        }
         public void ExportToCsv(List<TaskItem> tasks, string exportPath) { 
         try
             {

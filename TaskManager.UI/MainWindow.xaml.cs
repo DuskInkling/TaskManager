@@ -26,6 +26,7 @@ namespace TaskManager.UI
             InitializeComponent();
             var tasks = _dataService.LoadFromJson();
             _taskService.LoadTasks(tasks);
+            RefreshGrid();
         }
         private void NewTask_Click(object sender, RoutedEventArgs e)
         {

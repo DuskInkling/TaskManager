@@ -3,10 +3,66 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TaskManager.UI"
         mc:Ignorable="d"
-        Title="SettingsWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Settings" Height="400" Width="500"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BackgroundBrush}">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Theme -->
+        <Label Content="Theme" Foreground="{StaticResource ForegroundBrush}" Grid.Row="0" Grid.Column="0" Margin="0,10"/>
+        <ComboBox x:Name="cmbTheme" Grid.Row="0" Grid.Column="1" Margin="0,10">
+            <ComboBoxItem Content="Purple" IsSelected="True"/>
+            <ComboBoxItem Content="Dark"/>
+            <ComboBoxItem Content="Light"/>
+        </ComboBox>
+
+        <!-- Default Sort -->
+        <Label Content="Default Sort" Foreground="{StaticResource ForegroundBrush}" Grid.Row="1" Grid.Column="0" Margin="0,10"/>
+        <ComboBox x:Name="cmbDefaultSort" Grid.Row="1" Grid.Column="1" Margin="0,10">
+            <ComboBoxItem Content="Date" IsSelected="True"/>
+            <ComboBoxItem Content="Priority"/>
+            <ComboBoxItem Content="Deadline"/>
+        </ComboBox>
+
+        <!-- Notification Days -->
+        <Label Content="Notify Before" Foreground="{StaticResource ForegroundBrush}" Grid.Row="2" Grid.Column="0" Margin="0,10"/>
+        <ComboBox x:Name="cmbNotifyDays" Grid.Row="2" Grid.Column="1" Margin="0,10">
+            <ComboBoxItem Content="1 Day" IsSelected="True"/>
+            <ComboBoxItem Content="3 Days"/>
+            <ComboBoxItem Content="5 Days"/>
+            <ComboBoxItem Content="7 Days"/>
+        </ComboBox>
+
+        <!-- Save Location -->
+        <Label Content="Save Location" Foreground="{StaticResource ForegroundBrush}" Grid.Row="3" Grid.Column="0" Margin="0,10"/>
+        <Grid Grid.Row="3" Grid.Column="1" Margin="0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="txtSavePath" Grid.Column="0" IsReadOnly="True"/>
+            <Button Grid.Column="2" Content="Browse" Width="70" Click="Browse_Click"/>
+        </Grid>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                    Orientation="Horizontal" HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom" Margin="0,10,0,0">
+            <Button Content="Save" Width="100" Height="36" Margin="0,0,10,0" Click="btnSave_Click"/>
+            <Button Content="Cancel" Width="100" Height="36" Click="btnCancel_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

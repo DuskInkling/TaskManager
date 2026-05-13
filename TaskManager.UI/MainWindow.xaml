@@ -82,9 +82,12 @@
                                 CornerRadius="12">
                             <StackPanel Margin="12">
                                 <TextBlock Text="{Binding Title}" Foreground="{StaticResource ForegroundBrush}" FontSize="14" FontWeight="Bold"/>
-                                <TextBlock Text="{Binding Description}" Foreground="{StaticResource SubtextBrush}" FontSize="11"/>
+                                <Separator/>
+                                <TextBlock Text="{Binding Description}" Foreground="{StaticResource SubtextBrush}" FontSize="11" TextWrapping="Wrap"/>
+                                <Separator/>
                                 <TextBlock Text="{Binding Deadline}" Foreground="{StaticResource SubtextBrush}" FontSize="10"/>
-                                <TextBlock Text="{Binding Priority}" Foreground="{StaticResource SubtextBrush}" FontSize="10"/>
+                                <Separator/>
+                                <TextBlock Text="{Binding Priority}" Foreground="{StaticResource SubtextBrush}" FontSize="10"/> 
                             </StackPanel>
                         </Border>
                     </DataTemplate>

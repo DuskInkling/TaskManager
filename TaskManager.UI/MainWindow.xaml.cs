@@ -67,5 +67,10 @@ namespace TaskManager.UI
                 _dataService.ExportToCsv(tasksToExport, save.FileName);
             }
         }
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            var settingsWindow = new SettingsWindow();
+            settingsWindow.ShowDialog();
+        }
     }
 }

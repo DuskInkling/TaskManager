@@ -9,6 +9,7 @@ namespace TaskManager.UI
     /// </summary>
     public partial class App : Application
     {
+        public string Theme { get; set; } = "PurpleTheme";
     }
 
 }

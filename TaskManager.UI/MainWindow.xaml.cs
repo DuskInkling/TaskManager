@@ -74,5 +74,46 @@ namespace TaskManager.UI
             var settingsWindow = new SettingsWindow();
             settingsWindow.ShowDialog();
         }
+        private void Filter_Changed(object sender, RoutedEventArgs e)
+        {
+            ApplyFilters();
+        }
+        public void ApplyFilters()
+        {
+            var tasks = _taskService.GetAllTasks();
+            if (cmbState.SelectedIndex > 0)
+            {
+                State state = (State)(cmbState.SelectedIndex - 1);
+                tasks.Where(x => x.State == state).ToList();
+            }
+            if (cmbCategory.SelectedIndex > 0)
+            {
+                Category category = (Category)(cmbCategory.SelectedIndex - 1);
+                tasks.Where(x => x.Category == category).ToList();
+            }
+            if (cmbPriority.SelectedIndex > 0)
+            {
+                Priority priority = (Priority)(cmbPriority.SelectedIndex - 1);
+                tasks.Where(x => x.Priority == priority).ToList();
+            }
+            if (!string.IsNullOrEmpty(Search.Text) && Search.Text != "Search")
+            {
+                tasks = _taskService.Search(Search.Text);
+            }
+            tasks = cmbSort.SelectedIndex switch
+            {
+                1 => tasks.OrderByDescending(x => x.Priority).ToList(),
+                2 => tasks.OrderByDescending(x => x.Deadline).ToList(),
+                _ => tasks.OrderByDescending(x => x.CreationDate).ToList()
+            };
+
+            taskList.ItemsSource = null;
+            taskList.ItemsSource = tasks;
+        }
+        private void Search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ApplyFilters();
+        }
+
     }
 }

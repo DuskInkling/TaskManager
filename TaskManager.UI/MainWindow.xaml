@@ -58,12 +58,38 @@
                                  Margin="10"
                                  Background="Transparent"
                                  BorderThickness="0"
-                                 Padding="4"/>
+                                 Padding="4"
+                                 TextChanged="Search_TextChanged"/>
                     </Border>
-                    <ComboBox x:Name="cmbState" Width="120" Margin="10"/>
-                    <ComboBox x:Name="cmbCategory" Width="120" Margin="10"/>
-                    <ComboBox x:Name="cmbPriority" Width="120" Margin="10"/>
-                    <ComboBox x:Name="cmbSort" Width="120" Margin="10"/>
+                    <ComboBox x:Name="cmbState" Width="120" Margin="10" SelectionChanged="Filter_Changed">
+                        <ComboBoxItem Content="All States" IsSelected="True"/>
+                        <ComboBoxItem Content="New"/>
+                        <ComboBoxItem Content="InProgress"/>
+                        <ComboBoxItem Content="Completed"/>
+                    </ComboBox>
+
+                    <ComboBox x:Name="cmbCategory" Width="120" Margin="10" SelectionChanged="Filter_Changed">
+                        <ComboBoxItem Content="All Categories" IsSelected="True"/>
+                        <ComboBoxItem Content="Work"/>
+                        <ComboBoxItem Content="Study"/>
+                        <ComboBoxItem Content="Home"/>
+                        <ComboBoxItem Content="Personal"/>
+                        <ComboBoxItem Content="Hobby"/>
+                        <ComboBoxItem Content="Other"/>
+                    </ComboBox>
+
+                    <ComboBox x:Name="cmbPriority" Width="120" Margin="10" SelectionChanged="Filter_Changed">
+                        <ComboBoxItem Content="All Priorities" IsSelected="True"/>
+                        <ComboBoxItem Content="Low"/>
+                        <ComboBoxItem Content="Medium"/>
+                        <ComboBoxItem Content="High"/>
+                    </ComboBox>
+
+                    <ComboBox x:Name="cmbSort" Width="120" Margin="10" SelectionChanged="Filter_Changed">
+                        <ComboBoxItem Content="Date" IsSelected="True"/>
+                        <ComboBoxItem Content="Priority"/>
+                        <ComboBoxItem Content="Deadline"/>
+                    </ComboBox>
                 </WrapPanel>
             </DockPanel>
         </Border>

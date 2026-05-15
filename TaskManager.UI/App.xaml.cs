@@ -11,5 +11,5 @@ namespace TaskManager.UI
     {
         public string Theme { get; set; } = "PurpleTheme";
     }
-
+        
 }

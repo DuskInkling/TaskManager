@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using TaskManager.Models;
 using TaskManager.BusinessLogic;
 using Microsoft.Win32;
+using System.IO;
 namespace TaskManager.UI
 {
     /// <summary>
@@ -23,6 +24,7 @@ namespace TaskManager.UI
     {
         public AppSettings settings { get; private set; }
         public readonly SettingsService _settingsService = new SettingsService();
+        private AppSettings originalSettings;
         public SettingsWindow()
         {
             InitializeComponent();
@@ -31,10 +33,17 @@ namespace TaskManager.UI
         private void LoadCurrentSettings()
         {
             settings = _settingsService.LoadSettings();
+            originalSettings = new AppSettings
+            {
+                Theme = settings.Theme,
+                DefaultSort = settings.DefaultSort,
+                NotifyDays = settings.NotifyDays,
+                SaveLocation = settings.SaveLocation
+            };
             cmbTheme.SelectedIndex = settings.Theme switch
             {
-                "Dark" => 1,
-                "Light" => 2,
+                "DarkTheme" => 1,
+                "LightTheme" => 2,
                 _ => 0
             };
             cmbDefaultSort.SelectedIndex = settings.DefaultSort switch
@@ -64,7 +73,7 @@ namespace TaskManager.UI
         {
             settings = new AppSettings
             {
-                Theme = (cmbTheme.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Content.ToString() ?? "Purple",
+                Theme = (cmbTheme.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Content.ToString() ?? "PurpleTheme",
                 DefaultSort = (cmbDefaultSort.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Content.ToString() ?? "Date",
                 NotifyDays = cmbNotifyDays.SelectedIndex switch { 0 => 1, 2 => 5, 3 => 7, _ => 3 },
                 SaveLocation = txtSavePath.Text
@@ -75,13 +84,20 @@ namespace TaskManager.UI
         }
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            _settingsService.SaveSettings(originalSettings);
+            ThemeManager.ApplyTheme(originalSettings.Theme);
             DialogResult = false;
             Close();
+        }
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            _settingsService.SaveSettings(originalSettings);
+            ThemeManager.ApplyTheme(originalSettings.Theme);
         }
         private void cmbTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var theme = (cmbTheme.SelectedItem as ComboBoxItem)?.Content.ToString();
-            ThemeManager.ApplyTheme(selected);
+            ThemeManager.ApplyTheme(theme);
         }
     }
 }

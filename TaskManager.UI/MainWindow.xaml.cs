@@ -11,7 +11,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TaskManager.BusinessLogic;
 using TaskManager.Models;
-using Microsoft.Win32;
 namespace TaskManager.UI
 {
     /// <summary>
@@ -23,11 +22,11 @@ namespace TaskManager.UI
         private readonly DataService _dataService = new DataService();
         public MainWindow()
         {
+            var settings = new SettingsService().LoadSettings();
+            ThemeManager.ApplyTheme(settings.Theme);
             InitializeComponent();
             var tasks = _dataService.LoadFromJson();
             _taskService.LoadTasks(tasks);
-            var settings = new SettingsService().LoadSettings();
-            ThemeManager.ApplyTheme(settings.Theme);
             RefreshGrid();
         }
         private void NewTask_Click(object sender, RoutedEventArgs e)
@@ -45,7 +44,7 @@ namespace TaskManager.UI
             taskList.ItemsSource = null;
             taskList.ItemsSource = _taskService.GetAllTasks();
         }
-        private void OpenFile(object sender, RoutedEventArgs e) 
+        private void OpenFile(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "JSON Files (*json)|*.json";
@@ -74,27 +73,29 @@ namespace TaskManager.UI
             var settingsWindow = new SettingsWindow();
             settingsWindow.ShowDialog();
         }
-        private void Filter_Changed(object sender, RoutedEventArgs e)
+        private void Filter_Changed(object sender, SelectionChangedEventArgs e)
         {
             ApplyFilters();
         }
         public void ApplyFilters()
         {
             var tasks = _taskService.GetAllTasks();
+            if (_taskService == null || Search == null || cmbState == null || cmbCategory == null || cmbPriority == null || cmbSort == null || taskList == null)
+                return;
             if (cmbState.SelectedIndex > 0)
             {
                 State state = (State)(cmbState.SelectedIndex - 1);
-                tasks.Where(x => x.State == state).ToList();
+                tasks = tasks.Where(x => x.State == state).ToList();
             }
             if (cmbCategory.SelectedIndex > 0)
             {
                 Category category = (Category)(cmbCategory.SelectedIndex - 1);
-                tasks.Where(x => x.Category == category).ToList();
+                tasks = tasks.Where(x => x.Category == category).ToList();
             }
             if (cmbPriority.SelectedIndex > 0)
             {
                 Priority priority = (Priority)(cmbPriority.SelectedIndex - 1);
-                tasks.Where(x => x.Priority == priority).ToList();
+                tasks = tasks.Where(x => x.Priority == priority).ToList();
             }
             if (!string.IsNullOrEmpty(Search.Text) && Search.Text != "Search")
             {
@@ -114,6 +115,32 @@ namespace TaskManager.UI
         {
             ApplyFilters();
         }
+        private void EditTask_Click(object sender, RoutedEventArgs e) {
+            int id = (int)((Button)sender).Tag;
+            var task = _taskService.GetTaskById(id);
+            if (task == null) return;
 
+            var taskWindow = new TaskWindow(task);
+            if (taskWindow.ShowDialog() == true)
+            {
+                _taskService.UpdateTask(id, taskWindow.task);
+                _dataService.SaveToJson(_taskService.GetAllTasks());
+                RefreshGrid();
+            }
+        }
+        private void DeleteTask_Click(object sender, RoutedEventArgs e)
+        {
+            int id = (int)((Button)sender).Tag;
+            var task = _taskService.GetTaskById(id);
+            if (task == null) return;
+
+            MessageBoxResult result = MessageBox.Show($"Delete: '{task.Title}'?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                _taskService.RemoveTask(id);
+                _dataService.SaveToJson(_taskService.GetAllTasks());
+                RefreshGrid();
+            }
+        }
     }
 }

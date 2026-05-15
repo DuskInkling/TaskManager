@@ -25,7 +25,17 @@ namespace TaskManager.UI
         {
             InitializeComponent();
         }
-            private void btnSaveClick(object sender, RoutedEventArgs e)
+        public TaskWindow(TaskItem existingTask) : this()
+        {
+            txtTitle.Text = existingTask.Title;
+            txtDescription.Text = existingTask.Description;
+            dpDeadline.SelectedDate = existingTask.Deadline;
+            cmbPriority.SelectedIndex = (int)existingTask.Priority;
+            cmbCategory.SelectedIndex = (int)existingTask.Category;
+            cmbState.SelectedIndex = (int)existingTask.State;
+            Title = "Edit Task";
+        }
+        private void btnSaveClick(object sender, RoutedEventArgs e)
             {
             if (!Validate())
             {

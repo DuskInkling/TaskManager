@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         Title="Settings" Height="400" Width="500"
         WindowStartupLocation="CenterScreen"
-        Background="{StaticResource BackgroundBrush}">
+        Background="{DynamicResource BackgroundBrush}">
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"/>
@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <!-- Theme -->
-        <Label Content="Theme" Foreground="{StaticResource ForegroundBrush}" Grid.Row="0" Grid.Column="0" Margin="0,10"/>
+        <Label Content="Theme" Foreground="{DynamicResource ForegroundBrush}" Grid.Row="0" Grid.Column="0" Margin="0,10"/>
         <ComboBox x:Name="cmbTheme" Grid.Row="0" Grid.Column="1" Margin="0,10" SelectionChanged="cmbTheme_SelectionChanged">
             <ComboBoxItem Content="PurpleTheme" IsSelected="True"/>
             <ComboBoxItem Content="DarkTheme"/>
@@ -29,7 +29,7 @@
         </ComboBox>
 
         <!-- Default Sort -->
-        <Label Content="Default Sort" Foreground="{StaticResource ForegroundBrush}" Grid.Row="1" Grid.Column="0" Margin="0,10"/>
+        <Label Content="Default Sort" Foreground="{DynamicResource ForegroundBrush}" Grid.Row="1" Grid.Column="0" Margin="0,10"/>
         <ComboBox x:Name="cmbDefaultSort" Grid.Row="1" Grid.Column="1" Margin="0,10">
             <ComboBoxItem Content="Date" IsSelected="True"/>
             <ComboBoxItem Content="Priority"/>
@@ -37,7 +37,7 @@
         </ComboBox>
 
         <!-- Notification Days -->
-        <Label Content="Notify Before" Foreground="{StaticResource ForegroundBrush}" Grid.Row="2" Grid.Column="0" Margin="0,10"/>
+        <Label Content="Notify Before" Foreground="{DynamicResource ForegroundBrush}" Grid.Row="2" Grid.Column="0" Margin="0,10"/>
         <ComboBox x:Name="cmbNotifyDays" Grid.Row="2" Grid.Column="1" Margin="0,10">
             <ComboBoxItem Content="1 Day" IsSelected="True"/>
             <ComboBoxItem Content="3 Days"/>
@@ -46,7 +46,7 @@
         </ComboBox>
 
         <!-- Save Location -->
-        <Label Content="Save Location" Foreground="{StaticResource ForegroundBrush}" Grid.Row="3" Grid.Column="0" Margin="0,10"/>
+        <Label Content="Save Location" Foreground="{DynamicResource ForegroundBrush}" Grid.Row="3" Grid.Column="0" Margin="0,10"/>
         <Grid Grid.Row="3" Grid.Column="1" Margin="0,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

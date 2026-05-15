@@ -7,19 +7,19 @@
         mc:Ignorable="d"
         Title="MainWindow" Width="1280" Height="720"
         WindowStartupLocation="CenterScreen"
-        Background="{StaticResource BackgroundBrush}">
+        Background="{DynamicResource BackgroundBrush}">
 
     <DockPanel>
         <Menu DockPanel.Dock="Top"
-              Background="{StaticResource PrimaryBrush}"
-              Foreground="{StaticResource ForegroundBrush}"
+              Background="{DynamicResource PrimaryBrush}"
+              Foreground="{DynamicResource ForegroundBrush}"
               Height="22"
               FontSize="12pt">
             <MenuItem Header="File">
                 <MenuItem Header="New Task" Click="NewTask_Click"/>
                 <MenuItem Header="Open" Click="OpenFile"/>
                 <MenuItem Header="Export" Click="Export"/>
-                <MenuItem Header="Settings"/>
+                <MenuItem Header="Settings" Click="Settings_Click"/>
             </MenuItem>
             <MenuItem Header="Edit">
                 <MenuItem Header="Undo"/>
@@ -41,18 +41,18 @@
             </MenuItem>
         </Menu>
 
-        <Border DockPanel.Dock="Top" Background="{StaticResource SecondaryBrush}" Padding="10,6" BorderThickness="0">
+        <Border DockPanel.Dock="Top" Background="{DynamicResource SecondaryBrush}" Padding="10,6" BorderThickness="0">
             <DockPanel>
                 <Button DockPanel.Dock="Right"
                         Content="+ New Task"
                         Click="NewTask_Click"
                         Margin="10"
                         Padding="12,4"
-                        Background="{StaticResource PrimaryBrush}"
-                        Foreground="{StaticResource ForegroundBrush}"
+                        Background="{DynamicResource PrimaryBrush}"
+                        Foreground="{DynamicResource ForegroundBrush}"
                         BorderThickness="0"/>
                 <WrapPanel>
-                    <Border Style="{StaticResource FilterControl}">
+                    <Border Style="{DynamicResource FilterControl}">
                         <TextBox x:Name="Search" Text="Search"
                                  Width="200"
                                  Margin="10"
@@ -94,7 +94,7 @@
             </DockPanel>
         </Border>
 
-        <ScrollViewer Background="{StaticResource BackgroundBrush}">
+        <ScrollViewer Background="{DynamicResource BackgroundBrush}">
             <ItemsControl x:Name="taskList">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -104,17 +104,69 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Width="280" Height="260" Margin="10"
-                                Background="{StaticResource AccentBrush}"
+                                Background="{DynamicResource AccentBrush}"
                                 CornerRadius="12">
-                            <StackPanel Margin="12">
-                                <TextBlock Text="{Binding Title}" Foreground="{StaticResource ForegroundBrush}" FontSize="14" FontWeight="Bold"/>
-                                <Separator/>
-                                <TextBlock Text="{Binding Description}" Foreground="{StaticResource SubtextBrush}" FontSize="11" TextWrapping="Wrap"/>
-                                <Separator/>
-                                <TextBlock Text="{Binding Deadline}" Foreground="{StaticResource SubtextBrush}" FontSize="10"/>
-                                <Separator/>
-                                <TextBlock Text="{Binding Priority}" Foreground="{StaticResource SubtextBrush}" FontSize="10"/> 
-                            </StackPanel>
+                            <Grid Margin="14">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" 
+                                           Text="{Binding Title}"
+                                           Foreground="{DynamicResource ForegroundBrush}"
+                                           FontSize="15" FontWeight="Bold"
+                                           TextWrapping="Wrap"
+                                           Margin="0,0,6,0"/>
+                                <TextBlock Grid.Row="1" 
+                                           Text="{Binding Description}"
+                                           Foreground="{DynamicResource SubtextBrush}"
+                                           FontSize="11"
+                                           TextWrapping="Wrap"
+                                           MaxHeight="50"
+                                           TextTrimming="CharacterEllipsis"
+                                           Margin="0,0,6,0"/>
+                                <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,10">
+                                    <Border Background="{DynamicResource PrimaryBrush}" CornerRadius="10" Padding="8,3" Margin="0,0,6,0">
+                                        <TextBlock Text="{Binding Priority}" Foreground="{DynamicResource ForegroundBrush}" FontSize="10"/>
+                                    </Border>
+                                    <Border Background="{DynamicResource SecondaryBrush}" CornerRadius="10" Padding="8,3">
+                                        <TextBlock Text="{Binding Category}" Foreground="{DynamicResource ForegroundBrush}" FontSize="10"/>
+                                    </Border>
+                                </StackPanel>
+                                <Grid Grid.Row="3" Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="DEADLINE" Foreground="{DynamicResource SubtextBrush}" FontSize="9" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding Deadline, StringFormat=dd/MM/yyyy}" Foreground="{DynamicResource ForegroundBrush}" FontSize="11"/> 
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="STATUS" Foreground="{DynamicResource SubtextBrush}" FontSize="9" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding State}" Foreground="{DynamicResource ForegroundBrush}" FontSize="11"/>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Column="0" Content="✏ Edit"
+                                            Tag="{Binding Id}"
+                                               Click="EditTask_Click"
+                                               Padding="0,6"/>
+                                    <Button Grid.Column="2" Content="🗑 Delete"
+                                            Tag="{Binding Id}"
+                                            Click="DeleteTask_Click"
+                                            Background="{DynamicResource SecondaryBrush}"
+                                            Padding="0,6"/>
+                                </Grid>
+                            </Grid>
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

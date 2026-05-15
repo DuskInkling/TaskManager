@@ -10,13 +10,13 @@
     <Color x:Key="ForegroundColor">#FFFFFF</Color>
     <Color x:Key="SubtextColor">#cccccc</Color>
 
-    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}"/>
-    <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource SecondaryColor}"/>
-    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}"/>
-    <SolidColorBrush x:Key="AccentHoverBrush" Color="{StaticResource AccentHoverColor}"/>
-    <SolidColorBrush x:Key="AccentPressedBrush" Color="{StaticResource AccentPressedColor}"/>
-    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}"/>
-    <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource ForegroundColor}"/>
-    <SolidColorBrush x:Key="SubtextBrush" Color="{StaticResource SubtextColor}"/>
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{DynamicResource PrimaryColor}"/>
+    <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource SecondaryColor}"/>
+    <SolidColorBrush x:Key="AccentBrush" Color="{DynamicResource AccentColor}"/>
+    <SolidColorBrush x:Key="AccentHoverBrush" Color="{DynamicResource AccentHoverColor}"/>
+    <SolidColorBrush x:Key="AccentPressedBrush" Color="{DynamicResource AccentPressedColor}"/>
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{DynamicResource BackgroundColor}"/>
+    <SolidColorBrush x:Key="ForegroundBrush" Color="{DynamicResource ForegroundColor}"/>
+    <SolidColorBrush x:Key="SubtextBrush" Color="{DynamicResource SubtextColor}"/>
 
 </ResourceDictionary>

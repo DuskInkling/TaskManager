@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Text.Json;
 using TaskManager.Models;
-
 namespace TaskManager.BusinessLogic
 {
     public class SettingsService
@@ -32,7 +31,10 @@ namespace TaskManager.BusinessLogic
                 string json = JsonSerializer.Serialize(settings, options);
                 File.WriteAllText(settingsPath, json);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                File.WriteAllText("debug_save_error.txt", ex.Message);
+            }
         }
     }
 }

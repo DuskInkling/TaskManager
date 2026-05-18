@@ -26,11 +26,11 @@
                 <MenuItem Header="Redo"/>
                 <MenuItem Header="Copy"/>
                 <MenuItem Header="Paste"/>
-                <MenuItem Header="Edit Task" Click="EditTask_Click"/>
-                <MenuItem Header="Delete Task" Click="DeleteTask_Click"/>
+                <MenuItem Header="Edit Task" Click="MenuEditTask_Click"/>
+                <MenuItem Header="Delete Task" Click="MenuDeleteTask_Click"/>
             </MenuItem>
             <MenuItem Header="View">
-                <MenuItem Header="Refresh" Click="RefreshGrid"/>
+                <MenuItem Header="Refresh" Click="Refresh_Click"/>
                 <MenuItem Header="Show/Hide Completed Task"/>
                 <MenuItem Header="Sort By">
                     <MenuItem Header="Date"/>
@@ -107,7 +107,8 @@
                     <DataTemplate>
                         <Border Width="280" Height="260" Margin="10"
                                 Background="{DynamicResource AccentBrush}"
-                                CornerRadius="12">
+                                CornerRadius="12"
+                                MouseLeftButtonDown="TaskCard_Click">
                             <Grid Margin="14">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>

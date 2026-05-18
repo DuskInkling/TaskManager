@@ -20,11 +20,19 @@ namespace TaskManager.UI
     {
         private readonly TaskService _taskService = new TaskService();
         private readonly DataService _dataService = new DataService();
+        private TaskItem _selectedTask;
+        private Border _selectedBorder;
         public MainWindow()
         {
+           
             var settings = new SettingsService().LoadSettings();
             ThemeManager.ApplyTheme(settings.Theme);
             InitializeComponent();
+            ThemeManager.ThemeChanged += () =>
+            {
+                ResetSelection();
+                RefreshGrid();
+            };
             var tasks = _dataService.LoadFromJson();
             _taskService.LoadTasks(tasks);
             RefreshGrid();
@@ -44,6 +52,12 @@ namespace TaskManager.UI
         {
             taskList.ItemsSource = null;
             taskList.ItemsSource = _taskService.GetAllTasks();
+            CheckExpiringTasks();
+        }
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshGrid();
+            CheckExpiringTasks();
         }
         private void OpenFile(object sender, RoutedEventArgs e)
         {
@@ -73,6 +87,10 @@ namespace TaskManager.UI
         {
             var settingsWindow = new SettingsWindow();
             settingsWindow.ShowDialog();
+            var settings = new SettingsService().LoadSettings();
+            ThemeManager.ApplyTheme(settings.Theme);
+            ResetSelection();
+            RefreshGrid();
         }
         private void Filter_Changed(object sender, SelectionChangedEventArgs e)
         {
@@ -118,15 +136,48 @@ namespace TaskManager.UI
         }
         private void EditTask_Click(object sender, RoutedEventArgs e) {
             int id = (int)((Button)sender).Tag;
-            var task = _taskService.GetTaskById(id);
-            if (task == null) return;
+            _selectedTask = _taskService.GetTaskById(id);
+            if (_selectedTask == null) return;
 
-            var taskWindow = new TaskWindow(task);
+            var taskWindow = new TaskWindow(_selectedTask);
             if (taskWindow.ShowDialog() == true)
             {
                 _taskService.UpdateTask(id, taskWindow.task);
                 _dataService.SaveToJson(_taskService.GetAllTasks());
                 RefreshGrid();
+            }
+        }
+        private void MenuEditTask_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedTask == null)
+            {
+                MessageBox.Show("Please select a task first.", "No Task Selected", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            var taskWindow = new TaskWindow(_selectedTask);
+            if (taskWindow.ShowDialog() == true)
+            {
+                _taskService.UpdateTask(_selectedTask.Id, taskWindow.task);
+                _dataService.SaveToJson(_taskService.GetAllTasks());
+                RefreshGrid();
+                CheckExpiringTasks();
+            }
+        }
+        private void MenuDeleteTask_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedTask == null)
+            {
+                MessageBox.Show("Please select a task first", "No Task Selected", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            var result = MessageBox.Show($"Delete '{_selectedTask.Title}'?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                _taskService.RemoveTask(_selectedTask.Id);
+                _selectedTask = null;
+                _dataService.SaveToJson(_taskService.GetAllTasks());
+                RefreshGrid();
+                CheckExpiringTasks();
             }
         }
         private void DeleteTask_Click(object sender, RoutedEventArgs e)
@@ -158,6 +209,25 @@ namespace TaskManager.UI
             {
                 notificationBar.Visibility = Visibility.Collapsed;
             }
+        }
+        private void TaskCard_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (_selectedBorder != null)
+                _selectedBorder.Background = (Brush)Application.Current.Resources["AccentBrush"];
+
+            _selectedBorder = sender as Border;
+            _selectedTask = _selectedBorder?.DataContext as TaskItem;
+            if (_selectedBorder != null)
+                _selectedBorder.Background = (Brush)Application.Current.Resources["AccentHoverBrush"];
+        }
+        private void ResetSelection()
+        {
+            if (_selectedBorder != null)
+            {
+                _selectedBorder.Background = (Brush)Application.Current.Resources["AccentBrush"];
+            }
+            _selectedBorder = null;
+            _selectedTask = null;
         }
     }
 }

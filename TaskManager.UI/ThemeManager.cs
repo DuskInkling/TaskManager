@@ -7,14 +7,13 @@ namespace TaskManager.BusinessLogic
     public static class ThemeManager
     {
         public static string CurrentTheme { get; private set; } = "PurpleTheme";
+        public static event Action ThemeChanged;
 
         public static void ApplyTheme(string themeName)
         {
             //MessageBox.Show($"Applying theme: '{themeName}'");
             if (string.IsNullOrEmpty(themeName))
                 themeName = "PurpleTheme";
-            //if (!themeName.EndsWith("Theme"))
-            //    themeName += "Theme";
             CurrentTheme = themeName;
 
             var dict = new ResourceDictionary
@@ -28,6 +27,7 @@ namespace TaskManager.BusinessLogic
                 mergedDicts.Remove(existing);
 
             mergedDicts.Add(dict);
+            ThemeChanged?.Invoke();
         }
     }
 }

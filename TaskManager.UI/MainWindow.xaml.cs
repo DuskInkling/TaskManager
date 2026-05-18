@@ -28,6 +28,7 @@ namespace TaskManager.UI
             var tasks = _dataService.LoadFromJson();
             _taskService.LoadTasks(tasks);
             RefreshGrid();
+            CheckExpiringTasks();
         }
         private void NewTask_Click(object sender, RoutedEventArgs e)
         {
@@ -140,6 +141,22 @@ namespace TaskManager.UI
                 _taskService.RemoveTask(id);
                 _dataService.SaveToJson(_taskService.GetAllTasks());
                 RefreshGrid();
+            }
+        }
+        private void CheckExpiringTasks()
+        {
+            var settings = new SettingsService().LoadSettings();
+            var expiring = _taskService.GetExpiringTasks(settings.NotifyDays);
+
+            if (expiring.Count > 0)
+            {
+                notificationBar.Visibility = Visibility.Visible;
+                txtNotification.Text = $"⚠️ {expiring.Count} task(s) expiring within {settings.NotifyDays} days :" +
+                    string.Join(",", expiring.Select(x => x.Title));
+            }
+            else
+            {
+                notificationBar.Visibility = Visibility.Collapsed;
             }
         }
     }

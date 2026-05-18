@@ -91,8 +91,12 @@ namespace TaskManager.UI
         }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            _settingsService.SaveSettings(originalSettings);
-            ThemeManager.ApplyTheme(originalSettings.Theme);
+            if (DialogResult != true)
+            {
+                _settingsService.SaveSettings(originalSettings);
+                ThemeManager.ApplyTheme(originalSettings.Theme);
+            }
+            base.OnClosing(e);
         }
         private void cmbTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

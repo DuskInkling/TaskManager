@@ -1,16 +1,9 @@
 ﻿using Microsoft.Win32;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TaskManager.BusinessLogic;
-using TaskManager.Models;
 namespace TaskManager.UI
 {
     /// <summary>
@@ -20,20 +13,21 @@ namespace TaskManager.UI
     {
         private readonly TaskService _taskService = new TaskService();
         private readonly DataService _dataService = new DataService();
+        private readonly SettingsService _settingsService = new SettingsService();
         private TaskItem _selectedTask;
-        private Border _selectedBorder;
+        private Border _selectedBorder; 
+        private AppSettings _settings;
         public MainWindow()
         {
-           
-            var settings = new SettingsService().LoadSettings();
-            ThemeManager.ApplyTheme(settings.Theme);
+            _settings = _settingsService.LoadSettings();
+            ThemeManager.ApplyTheme(_settings.Theme);
             InitializeComponent();
             ThemeManager.ThemeChanged += () =>
             {
                 ResetSelection();
                 RefreshGrid();
             };
-            var tasks = _dataService.LoadFromJson();
+            var tasks = _dataService.LoadFromJson(_settings.SaveLocation);
             _taskService.LoadTasks(tasks);
             RefreshGrid();
             CheckExpiringTasks();
@@ -44,7 +38,7 @@ namespace TaskManager.UI
             if (taskWindow.ShowDialog() == true)
             {
                 _taskService.AddTask(taskWindow.task);
-                _dataService.SaveToJson(_taskService.GetAllTasks());
+                _dataService.SaveToJson(_taskService.GetAllTasks(), _settings.SaveLocation);
                 RefreshGrid();
             }
         }
@@ -87,8 +81,8 @@ namespace TaskManager.UI
         {
             var settingsWindow = new SettingsWindow();
             settingsWindow.ShowDialog();
-            var settings = new SettingsService().LoadSettings();
-            ThemeManager.ApplyTheme(settings.Theme);
+            _settings = _settingsService.LoadSettings();
+            ThemeManager.ApplyTheme(_settings.Theme);
             ResetSelection();
             RefreshGrid();
         }
@@ -118,7 +112,10 @@ namespace TaskManager.UI
             }
             if (!string.IsNullOrEmpty(Search.Text) && Search.Text != "Search")
             {
-                tasks = _taskService.Search(Search.Text);
+                string query = Search.Text;
+                tasks = tasks.Where(x =>
+                x.Title.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                x.Description.Contains(query, StringComparison.OrdinalIgnoreCase)).ToList();
             }
             tasks = cmbSort.SelectedIndex switch
             {
@@ -143,7 +140,7 @@ namespace TaskManager.UI
             if (taskWindow.ShowDialog() == true)
             {
                 _taskService.UpdateTask(id, taskWindow.task);
-                _dataService.SaveToJson(_taskService.GetAllTasks());
+                _dataService.SaveToJson(_taskService.GetAllTasks(), _settings.SaveLocation);
                 RefreshGrid();
             }
         }
@@ -158,7 +155,7 @@ namespace TaskManager.UI
             if (taskWindow.ShowDialog() == true)
             {
                 _taskService.UpdateTask(_selectedTask.Id, taskWindow.task);
-                _dataService.SaveToJson(_taskService.GetAllTasks());
+                _dataService.SaveToJson(_taskService.GetAllTasks(), _settings.SaveLocation);
                 RefreshGrid();
                 CheckExpiringTasks();
             }
@@ -175,7 +172,7 @@ namespace TaskManager.UI
             {
                 _taskService.RemoveTask(_selectedTask.Id);
                 _selectedTask = null;
-                _dataService.SaveToJson(_taskService.GetAllTasks());
+                _dataService.SaveToJson(_taskService.GetAllTasks(), _settings.SaveLocation);
                 RefreshGrid();
                 CheckExpiringTasks();
             }
@@ -190,19 +187,19 @@ namespace TaskManager.UI
             if (result == MessageBoxResult.Yes)
             {
                 _taskService.RemoveTask(id);
-                _dataService.SaveToJson(_taskService.GetAllTasks());
+                _dataService.SaveToJson(_taskService.GetAllTasks(), _settings.SaveLocation);
                 RefreshGrid();
             }
         }
         private void CheckExpiringTasks()
         {
-            var settings = new SettingsService().LoadSettings();
-            var expiring = _taskService.GetExpiringTasks(settings.NotifyDays);
+            _settings = _settingsService.LoadSettings();
+            var expiring = _taskService.GetExpiringTasks(_settings.NotifyDays);
 
             if (expiring.Count > 0)
             {
                 notificationBar.Visibility = Visibility.Visible;
-                txtNotification.Text = $"⚠️ {expiring.Count} task(s) expiring within {settings.NotifyDays} days :" +
+                txtNotification.Text = $"⚠️ {expiring.Count} task(s) expiring within {_settings.NotifyDays} days :" +
                     string.Join(",", expiring.Select(x => x.Title));
             }
             else
@@ -216,7 +213,7 @@ namespace TaskManager.UI
                 _selectedBorder.Background = (Brush)Application.Current.Resources["AccentBrush"];
 
             _selectedBorder = sender as Border;
-            _selectedTask = _selectedBorder?.DataContext as TaskItem;
+            _selectedTask = _selectedBorder.DataContext as TaskItem;
             if (_selectedBorder != null)
                 _selectedBorder.Background = (Brush)Application.Current.Resources["AccentHoverBrush"];
         }

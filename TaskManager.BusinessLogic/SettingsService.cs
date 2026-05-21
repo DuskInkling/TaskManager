@@ -1,11 +1,17 @@
-﻿using System.IO;
-using System.Text.Json;
-using TaskManager.Models;
+﻿using System.Text.Json;
 namespace TaskManager.BusinessLogic
 {
+    /// <summary>
+    /// Handles loading and saving application settings to a JSON file.
+    /// </summary>
     public class SettingsService
     {
         private readonly string settingsPath = "settings.json";
+        /// <summary>
+        /// Loads application settings from the settings JSON file.
+        /// Returns default settings if the file does not exist or an error occurs.
+        /// </summary>
+        /// <returns>An <see cref="AppSettings"/> object with the loaded or default values.</returns>
 
         public AppSettings LoadSettings()
         {
@@ -23,6 +29,10 @@ namespace TaskManager.BusinessLogic
             }
         }
 
+        /// <summary>
+        /// Serializes and saves the provided settings object to the settings JSON file.
+        /// </summary>
+        /// <param name="settings">The <see cref="AppSettings"/> object to persist.</param>
         public void SaveSettings(AppSettings settings)
         {
             try

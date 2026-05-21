@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Security.Cryptography.X509Certificates;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using TaskManager.Models;
+﻿using System.Text.Json;
 
 namespace TaskManager.BusinessLogic
 {
+    /// <summary>
+    /// Handles reading and writing task data to and from JSON files, and exporting to CSV.
+    /// </summary>
     public class DataService
     {
         private readonly string filePath = "tasks.json";
-
-        public void SaveToJson(List<TaskItem> tasks)
+        /// <summary>
+        /// Serializes the list of tasks to JSON and saves it to the default file path.
+        /// </summary>
+        /// <param name="tasks">The list of <see cref="TaskItem"/> objects to save.</param>
+        public void SaveToJson(List<TaskItem> tasks, string filePath)
         {
             try
             {
@@ -25,6 +25,12 @@ namespace TaskManager.BusinessLogic
                 Console.WriteLine($"Error saving tasks:{ex.Message}");
             }
         }
+        /// <summary>
+        /// Loads and deserializes the list of tasks from the default JSON file.
+        /// Returns an empty list if the file does not exist or cannot be read.
+        /// </summary>
+        /// <returns>A <see cref="List{T}"/> of <see cref="TaskItem"/> objects, or an empty list on failure.</returns>
+        /// <summary>
         public List<TaskItem> LoadFromJson()
         {
             try
@@ -46,6 +52,12 @@ namespace TaskManager.BusinessLogic
                 return new List<TaskItem>();
             }   
         }
+
+        /// Loads and deserializes the list of tasks from a specified JSON file path.
+        /// Returns an empty list if the file does not exist or cannot be read.
+        /// </summary>
+        /// <param name="filePath">The full path to the JSON file to load from.</param>
+        /// <returns>A <see cref="List{T}"/> of <see cref="TaskItem"/> objects, or an empty list on failure.</returns>
         public List<TaskItem> LoadFromJson(string filePath)
         {
             try
@@ -67,6 +79,13 @@ namespace TaskManager.BusinessLogic
                 return new List<TaskItem>();
             }
         }
+
+        /// <summary>
+        /// Exports the list of tasks to a CSV file at the specified path.
+        /// Each row contains Id, Title, Description, CreationDate, Deadline, Priority, Category, and State.
+        /// </summary>
+        /// <param name="tasks">The list of <see cref="TaskItem"/> objects to export.</param>
+        /// <param name="exportPath">The full file path where the CSV will be written.</param>
         public void ExportToCsv(List<TaskItem> tasks, string exportPath) { 
         try
             {
@@ -81,7 +100,7 @@ namespace TaskManager.BusinessLogic
                         $"{task.Deadline}," +
                         $"{task.Priority}," +
                         $"{task.Category}," +
-                        $"{task.State},");
+                        $"{task.State}");
                 }
                 File.WriteAllLines(exportPath, lines);
             }

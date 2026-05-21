@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TaskManager.Models
+﻿/// <summary>
+/// Defines the possible states a task can be in during its lifecycle.
+/// </summary>
+public enum State
 {
-    public enum State
-    {
-        New,
-        InProgress,
-        Completed
-    }
+    /// <summary>The task has been created but work has not started.</summary>
+    New,
+
+    /// <summary>The task is currently being worked on.</summary>
+    InProgress,
+
+    /// <summary>The task has been finished.</summary>
+    Completed
 }

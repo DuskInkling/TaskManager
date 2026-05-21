@@ -17,6 +17,7 @@ namespace TaskManager.UI
         private TaskItem _selectedTask;
         private Border _selectedBorder; 
         private AppSettings _settings;
+        private bool _hideCompleted = false;
         public MainWindow()
         {
             _settings = _settingsService.LoadSettings();
@@ -117,6 +118,9 @@ namespace TaskManager.UI
                 x.Title.Contains(query, StringComparison.OrdinalIgnoreCase) ||
                 x.Description.Contains(query, StringComparison.OrdinalIgnoreCase)).ToList();
             }
+            if (_hideCompleted)
+                tasks = tasks.Where(t => t.State != State.Completed).ToList();
+
             tasks = cmbSort.SelectedIndex switch
             {
                 1 => tasks.OrderByDescending(x => x.Priority).ToList(),
@@ -225,6 +229,20 @@ namespace TaskManager.UI
             }
             _selectedBorder = null;
             _selectedTask = null;
+        }
+        private void ShowHideCompleted_Click(object sender, RoutedEventArgs e)
+        {
+            _hideCompleted = !_hideCompleted;
+            ApplyFilters();
+        }
+        private void SortByDate_Click(object sender, RoutedEventArgs e)
+        {
+            cmbSort.SelectedIndex = 0;
+        }
+
+        private void SortByPriority_Click(object sender, RoutedEventArgs e)
+        {
+            cmbSort.SelectedIndex = 1;
         }
     }
 }

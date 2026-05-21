@@ -22,19 +22,15 @@
                 <MenuItem Header="Settings" Click="Settings_Click"/>
             </MenuItem>
             <MenuItem Header="Edit">
-                <MenuItem Header="Undo"/>
-                <MenuItem Header="Redo"/>
-                <MenuItem Header="Copy"/>
-                <MenuItem Header="Paste"/>
                 <MenuItem Header="Edit Task" Click="MenuEditTask_Click"/>
                 <MenuItem Header="Delete Task" Click="MenuDeleteTask_Click"/>
             </MenuItem>
             <MenuItem Header="View">
                 <MenuItem Header="Refresh" Click="Refresh_Click"/>
-                <MenuItem Header="Show/Hide Completed Task"/>
+                <MenuItem Header="Show/Hide Completed Task" Click="ShowHideCompleted_Click"/>
                 <MenuItem Header="Sort By">
-                    <MenuItem Header="Date"/>
-                    <MenuItem Header="Priority"/>
+                    <MenuItem Header="Date" Click="SortByDate_Click"/>
+                    <MenuItem Header="Priority" Click="SortByPriority_Click"/>
                 </MenuItem>
                 <MenuItem Header="Filter"/>
             </MenuItem>

@@ -86,23 +86,25 @@ namespace TaskManager.BusinessLogic
         /// </summary>
         /// <param name="tasks">The list of <see cref="TaskItem"/> objects to export.</param>
         /// <param name="exportPath">The full file path where the CSV will be written.</param>
-        public void ExportToCsv(List<TaskItem> tasks, string exportPath) { 
-        try
+        public void ExportToCsv(List<TaskItem> tasks, string exportPath)
+        {
+            try
             {
                 var lines = new List<string>();
                 lines.Add("Id,Title,Description,CreationDate,Deadline,Priority,Category,State");
                 foreach (var task in tasks)
                 {
                     lines.Add($"{task.Id}," +
-                        $"{task.Title}," +
-                        $"{task.Description}," +
-                        $"{task.CreationDate}," +
-                        $"{task.Deadline}," +
+                        $"\"{task.Title}\"," +
+                        $"\"{task.Description}\"," +
+                        $"{task.CreationDate:yyyy-MM-dd}," +
+                        $"{task.Deadline:yyyy-MM-dd}," +
                         $"{task.Priority}," +
                         $"{task.Category}," +
                         $"{task.State}");
                 }
-                File.WriteAllLines(exportPath, lines);
+                var encoding = new System.Text.UTF8Encoding(true); // true = include BOM
+                File.WriteAllLines(exportPath, lines, encoding);
             }
             catch (IOException ex)
             {
